@@ -33,7 +33,8 @@ public final class ConversationPanel extends JPanel {
   private final MessagePanel messagePanel;
 
   public ConversationPanel(ClientContext clientContext, MessagePanel messagePanel) {
-    super(new GridBagLayout());
+    
+	super(new GridBagLayout());
     this.clientContext = clientContext;
     this.messagePanel = messagePanel;
     initialize();
@@ -87,6 +88,7 @@ public final class ConversationPanel extends JPanel {
     titlePanelC.gridheight = 4;
     titlePanelC.fill = GridBagConstraints.HORIZONTAL;
     titlePanelC.anchor = GridBagConstraints.FIRST_LINE_START;
+    
 
     listPanelC.gridx = 0;
     listPanelC.gridy = 4;
@@ -96,6 +98,7 @@ public final class ConversationPanel extends JPanel {
     listPanelC.anchor = GridBagConstraints.FIRST_LINE_START;
     listPanelC.weightx = 0.8;
     listPanelC.weighty = 0.5;
+    
 
     buttonPanelC.gridx = 0;
     buttonPanelC.gridy = 8;
@@ -103,10 +106,17 @@ public final class ConversationPanel extends JPanel {
     buttonPanelC.gridheight = 4;
     buttonPanelC.fill = GridBagConstraints.HORIZONTAL;
     buttonPanelC.anchor = GridBagConstraints.FIRST_LINE_START;
+    
 
     this.add(titlePanel, titlePanelC);
+    titlePanel.setBackground(Color.red);
+    
     this.add(listShowPanel, listPanelC);
+    listShowPanel.setBackground(Color.red);
+    
     this.add(buttonPanel, buttonPanelC);
+    buttonPanel.setBackground(Color.red);
+    
 
     // User clicks Conversations Update button.
     updateButton.addActionListener(new ActionListener() {

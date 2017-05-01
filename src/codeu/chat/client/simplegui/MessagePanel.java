@@ -93,6 +93,8 @@ public final class MessagePanel extends JPanel {
 
     titlePanel.add(titleConvPanel, titleConvPanelC);
     titlePanel.add(titleOwnerPanel, titleOwnerPanelC);
+    titleOwnerPanel.setBackground(Color.yellow);
+    titleConvPanel.setBackground(Color.yellow);
     titlePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
     // User List panel.
@@ -111,11 +113,13 @@ public final class MessagePanel extends JPanel {
     userListScrollPane.setMinimumSize(new Dimension(500, 200));
     userListScrollPane.setPreferredSize(new Dimension(500, 200));
 
-    // Button panel
+    // Button panel and text box
     final JPanel buttonPanel = new JPanel();
     final GridBagConstraints buttonPanelC = new GridBagConstraints();
-
-    final JButton addButton = new JButton("Add");
+    final JTextField textField = new JTextField(20);
+    
+    final JButton addButton = new JButton("Send");
+    buttonPanel.add(textField);
     buttonPanel.add(addButton);
 
     // Placement of title, list panel, buttons, and current user panel.
@@ -144,6 +148,9 @@ public final class MessagePanel extends JPanel {
     this.add(titlePanel, titlePanelC);
     this.add(listShowPanel, listPanelC);
     this.add(buttonPanel, buttonPanelC);
+    titlePanel.setBackground(Color.red);
+    listShowPanel.setBackground(Color.red);
+    buttonPanel.setBackground(Color.red);
 
     // User click Messages Add button - prompt for message body and add new Message to Conversation
     addButton.addActionListener(new ActionListener() {
