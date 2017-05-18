@@ -57,6 +57,7 @@ public final class Chat {
     System.out.println("   c-select <index> - select conversation from list.");
     System.out.println("Message commands:");
     System.out.println("   m-add <body>     - add a new message to the current conversation.");
+    System.out.println("   m-delete <body>  - delete a new message from the current conversation.");
     System.out.println("   m-list-all       - list all messages in the current conversation.");
     System.out.println("   m-next <index>   - index of next message to view.");
     System.out.println("   m-show <count>   - show next <count> messages.");
@@ -150,6 +151,21 @@ public final class Chat {
           clientContext.message.addMessage(clientContext.user.getCurrent().id,
               clientContext.conversation.getCurrentId(),
               tokenScanner.nextLine().trim());
+        }
+      }
+
+    } else if (token.equals("m-delete")) {
+      if (!clientContext.user.hasCurrent()) {
+        System.out.println("ERROR: Not signed in.");
+      } else if (!clientContext.conversation.hasCurrent()) {
+        System.out.println("ERROR: No conversation selected.");
+      } else {
+        if (!tokenScanner.hasNext()) {
+          System.out.println("ERROR: Message body not supplied.");
+        } else {
+          clientContext.message.deleteMessage(clientContext.user.getCurrent().id,
+                  clientContext.conversation.getCurrentId(),
+                  tokenScanner.nextLine().trim());
         }
       }
 

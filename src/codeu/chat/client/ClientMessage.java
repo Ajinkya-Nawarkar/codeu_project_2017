@@ -111,6 +111,17 @@ public final class ClientMessage {
     updateMessages(false);
   }
 
+  // For m-delete command.
+  public void deleteMessage(Uuid author, Uuid conversation, String body) {
+    for(Message message: conversationContents) {
+      if(message.content.equals(body)) {
+        conversationContents.remove(message);
+        break;
+      }
+    }
+    updateMessages(false);
+  }
+
   // For m-list-all command.
   // Show all messages attached to the current conversation. This will balk if the conversation
   // has too many messages (use m-next and m-show instead).
