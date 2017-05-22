@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 May 17, 2017 6:10:58 PM codeu.chat.ServerMain main
 INFO: ============================= START OF LOG =============================
 May 17, 2017 6:10:58 PM codeu.chat.ServerMain main
@@ -4088,3 +4089,17 @@ May 17, 2017 10:48:00 PM codeu.chat.server.Server$1 run
 INFO: Reading update from relay...
 May 17, 2017 10:48:05 PM codeu.chat.server.Server$1 run
 INFO: Reading update from relay...
+=======
+Apr 18, 2017 3:02:33 PM codeu.chat.ServerMain main
+INFO: ============================= START OF LOG =============================
+Apr 18, 2017 3:02:34 PM codeu.chat.ServerMain main
+INFO: Starting server...
+Apr 18, 2017 3:02:34 PM codeu.chat.ServerMain runServer
+INFO: Server object created.
+Apr 18, 2017 3:02:34 PM codeu.chat.ServerMain runServer
+INFO: Starting hub...
+Apr 18, 2017 3:03:51 PM codeu.chat.server.Server handleConnection
+INFO: Handling new connection...
+Apr 18, 2017 3:03:51 PM codeu.chat.server.Server handleConnection
+INFO: Handling new connection...
+>>>>>>> parent of ce92c0d... Some stuff
