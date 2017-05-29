@@ -55,6 +55,13 @@ public final class Server {
   private final Relay relay;
   private Uuid lastSeen = Uuid.NULL;
 
+  private static final int PERF_LOG_FREQ = 10000;
+  private Long operationCount = 0L;
+  private Long totalTime = 0L;
+  private static final int PERF_LOG_FREQ = 1000;
+  private Long operationCount = 0L;
+  private Long totalTime = 0L;
+
   public Server(final Uuid id, final byte[] secret, final Relay relay) {
 
     this.id = id;
@@ -115,6 +122,8 @@ public final class Server {
   }
 
   private boolean onMessage(InputStream in, OutputStream out) throws IOException {
+
+    Time beforeOpeartion = Time.now();
 
     final int type = Serializers.INTEGER.read(in);
 
@@ -249,6 +258,16 @@ public final class Server {
       Serializers.INTEGER.write(out, NetworkCode.NO_MESSAGE);
 
     }
+
+
+         Time afterOperation = Time.now();
+         totalTime += afterOperation.inMs() - beforeOpeartion.inMs();
+         operationCount++;
+         if(operationCount % PERF_LOG_FREQ == 0){
+           Double averagePerOperation = ((double) totalTime) / operationCount;
+           LOG.info("PERFORMANCE " + operationCount + " " + totalTime + " average: " + averagePerOperation);
+
+         }
 
     return true;
   }

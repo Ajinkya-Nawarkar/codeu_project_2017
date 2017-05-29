@@ -42,20 +42,20 @@ public final class ClientUser {
   private Store<String, User> usersByName = new Store<>(String.CASE_INSENSITIVE_ORDER);
 
   public ClientUser(Controller controller, View view) {
-	  
+
     this.controller = controller;
     this.view = view;
-    
+
   }
 
   // Validate the username string
   public boolean isValidName(String userName){
-	  
-    if (userName.length() == 0) 
+
+    if (userName.length() == 0)
     {
       return false;
-    } 
-    
+    }
+
     else {
 
       for (User i : getUsers()){
@@ -70,6 +70,11 @@ public final class ClientUser {
     return true;
   }
 
+  public static void printUser(User user) {
+       System.out.println(getUserInfoString(user));
+  }
+
+
   public boolean hasCurrent() {
     return (current != null);
   }
@@ -83,18 +88,18 @@ public final class ClientUser {
 
     final User prev = current;
     if (name != null) {
-      
+
     	final User newCurrent = usersByName.first(name);
       if (newCurrent != null) {
         current = newCurrent;
       }
     }
-    
+
     return (prev != current);
   }
 
   public boolean signOutUser() {
-    
+
 	  boolean hadCurrent = hasCurrent();
     current = null;
     return hadCurrent;
@@ -105,20 +110,35 @@ public final class ClientUser {
   }
 
   public void addUser(String name) {
-    
+
 	  final boolean validInputs = isValidName(name);
 
     final User user = (validInputs) ? controller.newUser(name) : null;
 
     if (user == null) {
-      
+
     	System.out.format("Error: user not created - %s.\n",
           (validInputs) ? "server failure" : "bad input value");
     } else {
-      
+
     	LOG.info("New user complete, Name= \"%s\" UUID=%s", user.name, user.id);
       updateUsers();
     }
+  }
+
+  public Uuid addUserAndGetUuid(String name) {
+   final boolean validInputs = isValidName(name);
+   final User user = (validInputs) ? controller.newUser(name) : null;
+
+       if (user == null) {
+        System.out.format("Error: user not created - %s.\n",
+            (validInputs) ? "server failure" : "bad input value");
+         return null;
+       } else {
+          LOG.info("New user complete, Name= \"%s\" UUID=%s", user.name, user.id);
+          updateUsers();
+          return user.id;
+       }
   }
 
   public void showAllUsers() {
@@ -165,8 +185,4 @@ public final class ClientUser {
     return getUserInfoString(usersByName.first(uname));
   }
 
-  // Move to User's toString()
-  public static void printUser(User user) {
-    System.out.println(getUserInfoString(user));
-  }
 }

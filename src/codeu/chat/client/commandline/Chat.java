@@ -20,7 +20,11 @@ import codeu.chat.client.ClientContext;
 import codeu.chat.client.Controller;
 import codeu.chat.client.View;
 import codeu.chat.common.ConversationSummary;
+import codeu.chat.common.Uuid;
 import codeu.chat.util.Logger;
+import codeu.chat.util.RandomGenerator;
+import java.util.ArrayList;
+import java.util.Random;
 
 // Chat - top-level client application.
 public final class Chat {
@@ -31,9 +35,17 @@ public final class Chat {
 
   private final static int PAGE_SIZE = 10;
 
-  private boolean alive = true;
+  //private boolean alive = true;
 
   private final ClientContext clientContext;
+
+  Random rand = new Random();
+  RandomGenerator generator = new RandomGenerator();
+
+  private boolean alive = true;
+
+  private ArrayList<Uuid> randomUsers = new ArrayList<>();
+  private ArrayList<Uuid> randomConversations = new ArrayList<>();
 
   // Constructor - sets up the Chat Application
   public Chat(Controller controller, View view) {
@@ -60,6 +72,10 @@ public final class Chat {
     System.out.println("   m-list-all       - list all messages in the current conversation.");
     System.out.println("   m-next <index>   - index of next message to view.");
     System.out.println("   m-show <count>   - show next <count> messages.");
+    System.out.println("Random generator commands:");
+    System.out.println("   r-add-u   <count> - add <count> random users");
+    System.out.println("   r-add-c   <count> - add <count> random conversations");
+    System.out.println("   r-add-m   <count> - queues <count> messages to be added later");
   }
 
   // Prompt for new command.
@@ -182,6 +198,76 @@ public final class Chat {
         clientContext.message.showMessages(count);
       }
 
+    } else if (token.equals("r-add-m")) {
+
+           if (!tokenScanner.hasNextInt()) {
+             System.out.println("ERROR: Message count not provided");
+           } else {
+             int mCount = tokenScanner.nextInt();
+             if (mCount <= 0) {
+               System.out.println("ERROR: Message count should be positive");
+               return;
+             }
+
+             if (randomConversations.size() == 0 || randomUsers.size() == 0) {
+               System.out.println("ERROR: No message added, please add random conversations first.");
+               return;
+             }
+
+             for (int i = 0; i < mCount; i++) {
+
+               Uuid randUser = randomUsers.get(rand.nextInt(randomUsers.size()));
+               Uuid randConversation = randomConversations.get(rand.nextInt(randomConversations.size()));
+
+               clientContext.message.addMessage(randUser, randConversation, generator.getWords(15));
+
+             }
+             System.out.println("Successfully Added " + mCount + " random messages");
+
+           }
+         } else if (token.equals("r-add-u")) {
+           if (!tokenScanner.hasNextInt()) {
+             System.out.println("ERROR: User count not provided");
+           } else {
+             int uCount = tokenScanner.nextInt();
+             if (uCount <= 0) {
+               System.out.println("ERROR: User count should be positive");
+             } else {
+               for (int i = 0; i < uCount; i++) {
+                 String nextRandomUserName = "ruser" + randomUsers.size();
+                 Uuid randomUserUuid = clientContext.user.addUserAndGetUuid(nextRandomUserName);
+                 randomUsers.add(randomUserUuid);
+               }
+               System.out.println("Successfully Added " + uCount + " random users");
+             }
+           }
+         } else if (token.equals("r-add-c")) {
+           if (!tokenScanner.hasNextInt()) {
+             System.out.println("ERROR: Conversation count not provided");
+           } else {
+             int cCount = tokenScanner.nextInt();
+
+             if (cCount <= 0) {
+               System.out.println("ERROR: Conversation count should be positive");
+               return;
+             }
+             if (randomUsers.size() == 0) {
+               System.out.println("ERROR: No conversation added, please add random users first.");
+               return;
+             }
+
+            for (int i = 0; i < cCount; i++) {
+               String nextTitle = "rconv" + randomConversations.size();
+
+               // Choose a random user
+               Uuid nextUser = randomUsers.get(rand.nextInt(randomUsers.size()));
+               Uuid nextConversation = clientContext.conversation.startConversationAndGetUuid(nextTitle, nextUser);
+               randomConversations.add(nextConversation);
+             }
+             System.out.println("Successfully Added " + cCount + " random conversations");
+
+           }
+
     } else {
 
       System.out.format("Command not recognized: %s\n", token);
@@ -212,7 +298,7 @@ public final class Chat {
       System.out.println(" -- no messages in conversation --");
     } else {
       System.out.format(" conversation has %d messages.\n",
-                        clientContext.conversation.currentMessageCount());
+              clientContext.conversation.currentMessageCount());
       if (!clientContext.message.hasCurrent()) {
         System.out.println(" -- no current message --");
       } else {

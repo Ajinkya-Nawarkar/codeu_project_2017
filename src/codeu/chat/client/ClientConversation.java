@@ -14,6 +14,13 @@
 
 package codeu.chat.client;
 
+import codeu.chat.common.Conversation;
+import codeu.chat.common.ConversationSummary;
+import codeu.chat.util.Logger;
+import codeu.chat.util.Method;
+import codeu.chat.util.Uuid;
+import codeu.chat.util.store.Store;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,17 +37,20 @@ public final class ClientConversation {
   private final static Logger.Log LOG = Logger.newLog(ClientConversation.class);
 
   private final Controller controller;
+
   private final View view;
 
   private ConversationSummary currentSummary = null;
   private Conversation currentConversation = null;
 
   private final ClientUser userContext;
-  private ClientMessage messageContext = null;
 
   // This is the set of conversations known to the server.
   private final Map<Uuid, ConversationSummary> summariesByUuid = new HashMap<>();
 
+  private ConversationSummary currentSummary = null;
+  private Conversation currentConversation = null;
+  private ClientMessage messageContext = null;
   // This is the set of conversations known to the server, sorted by title.
   private Store<String, ConversationSummary> summariesSortedByTitle =
       new Store<>(String.CASE_INSENSITIVE_ORDER);
@@ -51,9 +61,6 @@ public final class ClientConversation {
     this.userContext = userContext;
   }
 
-  public void setMessageContext(ClientMessage messageContext) {
-    this.messageContext = messageContext;
-  }
 
   // Validate the title of the conversation
   static public boolean isValidTitle(String title) {
@@ -68,15 +75,45 @@ public final class ClientConversation {
     return clean;
   }
 
+  // Print Conversation.  User context is used to map from owner UUID to name.
+   public static void printConversation(ConversationSummary c, ClientUser userContext) {
+   if (c == null) {
+   System.out.println("Null conversation");
+   } else {
+     final String name = (userContext == null) ? null : userContext.getName(c.owner);
+     final String ownerName = (name == null) ? "" : String.format(" (%s)", name);
+     System.out.format(" Title: %s\n", c.title);
+     System.out.format("    Id: %s owner: %s%s created %s\n", c.id, c.owner, ownerName, c.creation);
+     }
+    }
+
+  // Print Conversation outside of User context.
+   public static void printConversation(ConversationSummary c) {
+      printConversation(c, null);
+    }
+
+
   public boolean hasCurrent() {
     return (currentSummary != null);
+  }
+
+  public void setMessageContext(ClientMessage messageContext) {
+     this.messageContext = messageContext;
   }
 
   public ConversationSummary getCurrent() {
     return currentSummary;
   }
 
-  public Uuid getCurrentId() { return (currentSummary != null) ? currentSummary.id : null; }
+  //public Uuid getCurrentId() { return (currentSummary != null) ? currentSummary.id : null; }
+
+  public void setCurrent(ConversationSummary conv) {
+    currentSummary = conv;
+  }
+
+  public Uuid getCurrentId() {
+       return (currentSummary != null) ? currentSummary.id : null;
+  }
 
   public int currentMessageCount() {
     return messageContext.currentMessageCount();
@@ -103,7 +140,25 @@ public final class ClientConversation {
     }
   }
 
-  public void setCurrent(ConversationSummary conv) { currentSummary = conv; }
+  //public void setCurrent(ConversationSummary conv) { currentSummary = conv; }
+
+  public Uuid startConversationAndGetUuid(String title, Uuid owner) {
+      final boolean validInputs = isValidTitle(title);
+      final Conversation conv = (validInputs) ? controller.newConversation(title, owner) : null;
+
+      if (conv == null) {
+         System.out.format("Error: conversation not created - %s.\n",
+             (validInputs) ? "server failure" : "bad input value");
+         return null;
+      } else {
+        LOG.info("New conversation: Title= \"%s\" UUID= %s", conv.title, conv.id);
+
+        currentSummary = conv.summary;
+
+        updateAllConversations(currentSummary != null);
+        return conv.id;
+      }
+    }
 
   public void showAllConversations() {
     updateAllConversations(false);
