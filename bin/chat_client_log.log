@@ -75,3 +75,13 @@ INFO: Created client
 Apr 18, 2017 3:03:32 PM codeu.chat.ClientMain main
 INFO: chat client has exited.
 >>>>>>> unique_userIds_names
+Jun 02, 2017 9:38:41 PM codeu.chat.ClientMain main
+INFO: ============================= START OF LOG =============================
+Jun 02, 2017 9:38:41 PM codeu.chat.ClientMain main
+INFO: Starting chat client...
+Jun 02, 2017 9:38:41 PM codeu.chat.ClientMain main
+INFO: Creating client...
+Jun 02, 2017 9:38:41 PM codeu.chat.ClientMain main
+INFO: Created client
+Jun 02, 2017 9:39:35 PM codeu.chat.ClientMain main
+INFO: chat client has exited.
