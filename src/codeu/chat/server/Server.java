@@ -55,12 +55,9 @@ public final class Server {
   private final Relay relay;
   private Uuid lastSeen = Uuid.NULL;
 
-  private static final int PERF_LOG_FREQ = 10000;
   private Long operationCount = 0L;
   private Long totalTime = 0L;
   private static final int PERF_LOG_FREQ = 1000;
-  private Long operationCount = 0L;
-  private Long totalTime = 0L;
 
   public Server(final Uuid id, final byte[] secret, final Relay relay) {
 

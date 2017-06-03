@@ -40,9 +40,6 @@ public final class ClientConversation {
 
   private final View view;
 
-  private ConversationSummary currentSummary = null;
-  private Conversation currentConversation = null;
-
   private final ClientUser userContext;
 
   // This is the set of conversations known to the server.
