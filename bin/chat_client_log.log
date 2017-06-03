@@ -153,3 +153,70 @@ java.net.SocketException: Invalid argument or cannot assign requested address
 
 Jun 02, 2017 11:22:29 PM codeu.chat.ClientMain main
 INFO: chat client has exited.
+Jun 02, 2017 11:28:08 PM codeu.chat.ClientMain main
+INFO: ============================= START OF LOG =============================
+Jun 02, 2017 11:28:08 PM codeu.chat.ClientMain main
+INFO: Starting chat client...
+Jun 02, 2017 11:28:08 PM codeu.chat.ClientMain main
+INFO: Creating client...
+Jun 02, 2017 11:28:08 PM codeu.chat.ClientMain main
+INFO: Created client
+Jun 02, 2017 11:28:13 PM codeu.chat.client.Controller newUser
+SEVERE: Exception during call on server.
+java.net.SocketException: Invalid argument or cannot assign requested address
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at java.net.Socket.<init>(Socket.java:434)
+	at java.net.Socket.<init>(Socket.java:211)
+	at codeu.chat.util.connections.ClientConnectionSource.connect(ClientConnectionSource.java:39)
+	at codeu.chat.client.Controller.newUser(Controller.java:72)
+	at codeu.chat.client.ClientUser.addUserAndGetUuid(ClientUser.java:131)
+	at codeu.chat.client.commandline.Chat.doOneCommand(Chat.java:238)
+	at codeu.chat.client.commandline.Chat.handleCommand(Chat.java:368)
+	at codeu.chat.ClientMain.main(ClientMain.java:57)
+
+Jun 02, 2017 11:28:13 PM codeu.chat.client.Controller newUser
+SEVERE: Exception during call on server.
+java.net.SocketException: Invalid argument or cannot assign requested address
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at java.net.Socket.<init>(Socket.java:434)
+	at java.net.Socket.<init>(Socket.java:211)
+	at codeu.chat.util.connections.ClientConnectionSource.connect(ClientConnectionSource.java:39)
+	at codeu.chat.client.Controller.newUser(Controller.java:72)
+	at codeu.chat.client.ClientUser.addUserAndGetUuid(ClientUser.java:131)
+	at codeu.chat.client.commandline.Chat.doOneCommand(Chat.java:238)
+	at codeu.chat.client.commandline.Chat.handleCommand(Chat.java:368)
+	at codeu.chat.ClientMain.main(ClientMain.java:57)
+
+Jun 02, 2017 11:28:13 PM codeu.chat.client.Controller newUser
+SEVERE: Exception during call on server.
+java.net.SocketException: Invalid argument or cannot assign requested address
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at java.net.Socket.<init>(Socket.java:434)
+	at java.net.Socket.<init>(Socket.java:211)
+	at codeu.chat.util.connections.ClientConnectionSource.connect(ClientConnectionSource.java:39)
+	at codeu.chat.client.Controller.newUser(Controller.java:72)
+	at codeu.chat.client.ClientUser.addUserAndGetUuid(ClientUser.java:131)
+	at codeu.chat.client.commandline.Chat.doOneCommand(Chat.java:238)
+	at codeu.chat.client.commandline.Chat.handleCommand(Chat.java:368)
+	at codeu.chat.ClientMain.main(ClientMain.java:57)
+
+Jun 02, 2017 11:28:21 PM codeu.chat.ClientMain main
+INFO: chat client has exited.
