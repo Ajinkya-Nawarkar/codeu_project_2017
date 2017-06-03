@@ -224,20 +224,5 @@ public final class ClientConversation {
     }
   }
 
-  // Print Conversation.  User context is used to map from owner UUID to name.
-  public static void printConversation(ConversationSummary c, ClientUser userContext) {
-    if (c == null) {
-      System.out.println("Null conversation");
-    } else {
-      final String name = (userContext == null) ? null : userContext.getName(c.owner);
-      final String ownerName = (name == null) ? "" : String.format(" (%s)", name);
-      System.out.format(" Title: %s\n", c.title);
-      System.out.format("    Id: %s owner: %s%s created %s\n", c.id, c.owner, ownerName, c.creation);
-    }
-  }
 
-  // Print Conversation outside of User context.
-  public static void printConversation(ConversationSummary c) {
-    printConversation(c, null);
-  }
 }
